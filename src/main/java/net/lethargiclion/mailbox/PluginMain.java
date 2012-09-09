@@ -1,4 +1,4 @@
-package net.lethargiclion;
+package net.lethargiclion.mailbox;
 
 import java.util.logging.Logger;
 

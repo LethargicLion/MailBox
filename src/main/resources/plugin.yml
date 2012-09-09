@@ -1,0 +1,3 @@
+name: MailBox
+description: In game mail
+main: net.lethargiclion.mailbox.PluginMain
