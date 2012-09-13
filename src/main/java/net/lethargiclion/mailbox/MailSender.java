@@ -55,6 +55,9 @@ public class MailSender implements CommandExecutor {
 				mailspace.addItem(book);
 				plr.sendMessage(ChatColor.GREEN+"[MailBox] Sent your mail to "+target.getDisplayName()+"!");
 				plr.setItemInHand(new ItemStack(Material.AIR));
+				if(target.isOnline()) {
+					target.sendMessage(ChatColor.YELLOW+"[MailBox] You got a new message!");
+				}
 				return true;
 			}
 		}
