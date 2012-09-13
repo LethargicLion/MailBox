@@ -38,6 +38,7 @@ public class PluginMain extends JavaPlugin {
 		}
 		mgr.loadMailboxes();
 		getCommand("sendmail").setExecutor(new MailSender(this));
+		getCommand("setmailbox").setExecutor(new MailboxSetter(this));
 	}
 	
 	@Override

@@ -53,7 +53,7 @@ public class MailSender implements CommandExecutor {
 				}
 				//Finally, we can actually send the book.
 				mailspace.addItem(book);
-				
+				return true;
 			}
 		}
 		return false;
