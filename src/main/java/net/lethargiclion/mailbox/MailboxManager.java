@@ -1,10 +1,10 @@
 package net.lethargiclion.mailbox;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import net.minecraft.server.Material;
-
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -25,7 +25,11 @@ public class MailboxManager {
 		users = plugin.mailboxesFile.getKeys(false);
 		for(String user : users) {
 			World checkWorld = plugin.getServer().getWorld(plugin.mailboxesFile.getString(user+".world"));
-			Chest check = (Chest) checkWorld.getBlockAt(plugin.mailboxesFile.getInt(user+".x"), plugin.mailboxesFile.getInt(user+".y"), plugin.mailboxesFile.getInt(user+".z")).getState();
+			Block block = checkWorld.getBlockAt(plugin.mailboxesFile.getInt(user+".x"), plugin.mailboxesFile.getInt(user+".y"), plugin.mailboxesFile.getInt(user+".z"));
+			Chest check = null;
+			if(block.getType() == Material.CHEST) {
+				check = (Chest) block.getState();
+			}
 			if(check == null) {
 				plugin.mcLog.info("[MailBox] "+user+" does not have a valid MailBox, removing!");
 				plugin.mailboxesFile.set(user, null);
@@ -40,7 +44,12 @@ public class MailboxManager {
 			return null;
 		}
 		World mailboxWorld = plugin.getServer().getWorld(plugin.mailboxesFile.getString(name+".world"));
-		Chest mailbox = (Chest) mailboxWorld.getBlockAt(plugin.mailboxesFile.getInt(name+".x"), plugin.mailboxesFile.getInt(name+".y"), plugin.mailboxesFile.getInt(name+".z")).getState();
+		Block block =  mailboxWorld.getBlockAt(plugin.mailboxesFile.getInt(name+".x"), plugin.mailboxesFile.getInt(name+".y"), plugin.mailboxesFile.getInt(name+".z"));
+		Chest mailbox = null;
+		
+		if (block.getType() == Material.CHEST) {
+			mailbox = (Chest)block.getState();
+		}
 		
 		if(mailbox == null) {
 			return null;
@@ -53,10 +62,10 @@ public class MailboxManager {
 		String name = plr.getName();
 		plugin.mailboxesFile.set(name+".world", box.getWorld().getName());
 		plugin.mailboxesFile.set(name+".x", box.getX());
-		plugin.mailboxesFile.set(name+".x", box.getY());
-		plugin.mailboxesFile.set(name+".x", box.getZ());
+		plugin.mailboxesFile.set(name+".y", box.getY());
+		plugin.mailboxesFile.set(name+".z", box.getZ());
 		try {
-			plugin.mailboxesFile.save("plugins/"+plugin.getDataFolder()+"mailboxes.yml");
+			plugin.mailboxesFile.save(new File(plugin.getDataFolder(),"mailboxes.yml"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

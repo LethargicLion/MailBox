@@ -1,6 +1,6 @@
 name: MailBox
 description: In game mail
-version: 0.01-SNAPSHOT
+version: 0.2-SNAPSHOT
 main: net.lethargiclion.mailbox.PluginMain
 commands:
   sendmail:

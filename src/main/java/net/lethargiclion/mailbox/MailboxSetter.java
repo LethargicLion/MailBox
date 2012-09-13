@@ -1,8 +1,6 @@
 package net.lethargiclion.mailbox;
 
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,16 +20,8 @@ public class MailboxSetter implements CommandExecutor {
 				sender.sendMessage("[MailBox] You need to be a player!");
 				return false;
 			}
-			Player plr = (Player) sender;
-			Block target = plr.getTargetBlock(null, 100);
-			Chest targetChest = (Chest) target.getState();
-			if(targetChest == null) {
-				plr.sendMessage(ChatColor.RED+"[MailBox] That is not a chest!");
-				return false;
-			}
-			
-			plugin.mgr.setMailbox(plr, targetChest);
-			plr.sendMessage(ChatColor.GREEN+"[MailBox] Mailbox set!");
+			sender.sendMessage(ChatColor.GREEN+"[MailBox] Please open the chest you want to set.");
+			plugin.listener.activePlayers.add(sender.getName());
 			return true;
 		}
 		return false;
