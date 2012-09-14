@@ -39,7 +39,10 @@ public class MailboxManager {
 	}
 	
 	public Chest getMailbox(Player plr) {
-		String name = plr.getName();
+		return getMailbox(plr.getName());
+	}
+	
+	public Chest getMailbox(String name) {
 		if(!plugin.mailboxesFile.contains(name)) {
 			return null;
 		}

@@ -36,14 +36,22 @@ public class MailSender implements CommandExecutor {
 				ItemStack book = plr.getItemInHand();
 				@SuppressWarnings("unused")
 				Book b = new CraftBookBuilder().getBook(book);
-				Player target = plugin.getServer().getPlayer(args[0]);
-				if(target == null) {
-					plr.sendMessage(ChatColor.RED+"[MailBox] "+args[0]+" is not a player!");
-					return false;
+				Player online = plugin.getServer().getPlayer(args[0]);
+				String target;
+				if(online == null) {
+					target = args[0];
+				} else {
+					target = online.getName();
 				}
+				
+				
+				/*if(target == null && (offline == null || !offline.hasPlayedBefore())) {
+					plr.sendMessage(ChatColor.RED+"[MailBox] "+args[0]+" has not played on this server before!");
+					return false;
+				} */
 				Chest targetBox = plugin.mgr.getMailbox(target);
 				if(targetBox == null) {
-					plr.sendMessage(ChatColor.RED+"[MailBox] "+target.getDisplayName()+" does not have a MailBox!");
+					plr.sendMessage(ChatColor.RED+"[MailBox] "+target+" does not have a MailBox!");
 					return false;
 				}
 				Inventory mailspace = targetBox.getInventory();
@@ -53,11 +61,12 @@ public class MailSender implements CommandExecutor {
 				}
 				//Finally, we can actually send the book.
 				mailspace.addItem(book);
-				plr.sendMessage(ChatColor.GREEN+"[MailBox] Sent your mail to "+target.getDisplayName()+"!");
+				plr.sendMessage(ChatColor.GREEN+"[MailBox] Sent your mail to "+target+"!");
 				plr.setItemInHand(new ItemStack(Material.AIR));
-				if(target.isOnline()) {
-					target.sendMessage(ChatColor.YELLOW+"[MailBox] You got a new message!");
-				}
+				plugin.mcLog.info("[MailBox] "+sender.getName()+" sent mail to "+target+"!");
+				if(online != null) {
+					online.sendMessage(ChatColor.YELLOW+"[MailBox] You have a new message!");
+				} //TODO add offline player notification
 				return true;
 			}
 		}
