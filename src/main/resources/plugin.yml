@@ -1,7 +1,9 @@
 name: MailBox
 description: In game mail
-version: 0.2-SNAPSHOT
+version: 1.0
 main: net.lethargiclion.mailbox.PluginMain
 commands:
   sendmail:
+    description: Send a message to a player!
   setmailbox:
+    description: Set your mailbox chest!
