@@ -13,6 +13,7 @@ public class PluginMain extends JavaPlugin {
 	public FileConfiguration mailboxesFile;
 	public MailboxManager mgr = new MailboxManager(this);
 	public InventoryListener listener = new InventoryListener(this);
+	public LoginNotifier notify = new LoginNotifier();
 	
 	@Override
 	public void onEnable() {
@@ -45,6 +46,7 @@ public class PluginMain extends JavaPlugin {
 		getCommand("sendmail").setExecutor(new MailSender(this));
 		getCommand("setmailbox").setExecutor(new MailboxSetter(this));
 		getServer().getPluginManager().registerEvents(listener, this);
+		getServer().getPluginManager().registerEvents(notify, this);
 	}
 	
 	@Override

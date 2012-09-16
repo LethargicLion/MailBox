@@ -66,7 +66,11 @@ public class MailSender implements CommandExecutor {
 				plugin.mcLog.info("[MailBox] "+sender.getName()+" sent mail to "+target+"!");
 				if(online != null) {
 					online.sendMessage(ChatColor.YELLOW+"[MailBox] You have a new message!");
-				} //TODO add offline player notification
+				} else {
+					if(!plugin.notify.notifyUsers.contains(target)) {
+						plugin.notify.notifyUsers.add(target);
+					}
+				}
 				return true;
 			}
 		}
